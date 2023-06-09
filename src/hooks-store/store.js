@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 let globalState = {};
 
@@ -14,8 +13,8 @@ export const useStore = () => {
     const newState = actions[actionIdentifier](globalState, payload);
     globalState = { ...globalState, ...newState };
 
-    for (const listeners of listeners) {
-      listeners(globalState);
+    for (const listener of listeners) {
+      listener(globalState);
     }
   };
 
@@ -34,5 +33,5 @@ export const initStore = (userActions, initialState) => {
   if (initialState) {
     globalState = { ...globalState, ...initialState };
   }
-  actions = { ...actions, userActions };
+  actions = { ...actions, ...userActions };
 };
